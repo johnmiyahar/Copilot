@@ -1,37 +1,39 @@
 document.addEventListener("DOMContentLoaded", () => {
   console.log('ShoreSquad is ready!');
 
-  // Map is already embedded in index.html
+  // Placeholder for weather data
+  const weatherSection = document.getElementById("weather");
+  weatherSection.innerHTML = "<p>Loading weather data...</p>";
+
+  // Fetch weather data from NEA API
+  const fetchWeatherData = async () => {
+    try {
+      const response = await fetch("https://api.data.gov.sg/v1/environment/4-day-weather-forecast");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      // Format and display weather data
+      const forecasts = data.items[0].forecasts;
+      let weatherHTML = "<h2>4-Day Weather Forecast</h2><ul>";
+
+      forecasts.forEach(forecast => {
+        weatherHTML += `<li><strong>${forecast.date}</strong>: ${forecast.forecast} (High: ${forecast.temperature.high}°C, Low: ${forecast.temperature.low}°C)</li>`;
+      });
+
+      weatherHTML += "</ul>";
+      weatherSection.innerHTML = weatherHTML;
+    } catch (error) {
+      console.error("Error fetching weather data:", error);
+      weatherSection.innerHTML = "<p>Unable to fetch weather data at this time. Please try again later.</p>";
+    }
+  };
+
+  fetchWeatherData();
+
+  // Placeholder for map
   const mapSection = document.getElementById("map");
 
-  // Placeholder for weather
-  const weatherSection = document.getElementById("weather");
-  weatherSection.innerHTML = "<p>Fetching weather data...</p>";
-
-  // Show loading spinner for weather
-  weatherSection.innerHTML = '<div class="spinner"></div><p>Fetching weather data...</p>';
-
-  // Fetch and display 4-day weather forecast from NEA
-  (async () => {
-    try {
-      const response = await fetch('https://api.data.gov.sg/v1/environment/4-day-weather-forecast');
-      if (!response.ok) throw new Error('Network response was not ok');
-      const data = await response.json();
-      const forecasts = data.items[0].forecasts;
-      let html = '<h3>🌤️ 4-Day Weather Forecast</h3><ul style="list-style:none;padding:0;">';
-      forecasts.forEach(day => {
-        html += `<li>\n🌊 <strong>${day.date}</strong> <span style="color:#00B4D8;">(${day.forecast})</span><br>\n<small>Temp: ${day.temperature.low}°C - ${day.temperature.high}°C</small>\n</li>`;
-      });
-      html += '</ul>';
-      weatherSection.innerHTML = html;
-    } catch (err) {
-      weatherSection.innerHTML = '<p style="color:#e63946;">Unable to fetch weather data. Please try again later.</p>';
-    }
-  })();
-
-  // Placeholder for social features
-  const socialSection = document.getElementById("social");
-  socialSection.innerHTML = "<p>Loading social features...</p>";
-
-  // Future: Integrate map (e.g. Leaflet.js), weather API, and social features here.
+  // Future: Add NEA API and Google Maps integration here
 });
