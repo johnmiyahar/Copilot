@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Placeholder for map
+  console.log('ShoreSquad is ready!');
+
+  // Map is already embedded in index.html
   const mapSection = document.getElementById("map");
-  mapSection.innerHTML = "<p>Loading map...</p>";
 
   // Placeholder for weather
   const weatherSection = document.getElementById("weather");
