@@ -1,7 +1,15 @@
-// ShoreSquad JavaScript
+document.addEventListener("DOMContentLoaded", () => {
+  // Placeholder for map
+  const mapSection = document.getElementById("map");
+  mapSection.innerHTML = "<p>Loading map...</p>";
 
-// Placeholder for map integration
-console.log('Map integration coming soon!');
+  // Placeholder for weather
+  const weatherSection = document.getElementById("weather");
+  weatherSection.innerHTML = "<p>Fetching weather data...</p>";
 
-// Placeholder for weather API integration
-console.log('Weather API integration coming soon!');
+  // Placeholder for social features
+  const socialSection = document.getElementById("social");
+  socialSection.innerHTML = "<p>Loading social features...</p>";
+
+  // Future: Integrate map (e.g. Leaflet.js), weather API, and social features here.
+});
